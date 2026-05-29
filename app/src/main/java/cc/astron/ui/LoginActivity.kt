@@ -6,6 +6,7 @@ import android.webkit.CookieManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import cc.astron.model.Account
 import cc.astron.utils.PreferenceManager
 import java.util.UUID
 
@@ -35,8 +36,13 @@ class LoginActivity : AppCompatActivity() {
     private fun handleLoginSuccess(cookies: String) {
         val preferenceManager = PreferenceManager(this)
         val newId = UUID.randomUUID().toString()
-        // In a real app, we would fetch user info from YouTube API using these cookies
-        preferenceManager.addAccount(newId)
+        // Mock account data from captured cookies (in real app, use API)
+        val name = cookies.split(";").find { it.trim().startsWith("display_name=") }?.split("=")?.get(1) ?: "YouTube User"
+        val email = cookies.split(";").find { it.trim().startsWith("email=") }?.split("=")?.get(1) ?: "user@youtube.com"
+
+        val account = Account(newId, name, email, cookies)
+
+        preferenceManager.addAccount(account)
         preferenceManager.setCookies(newId, cookies)
         preferenceManager.setUserLoggedIn(true)
         preferenceManager.setActiveAccountId(newId)

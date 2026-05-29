@@ -13,7 +13,16 @@ class AdBlocker {
         "adservice.google.com",
         "youtube.com/pagead/",
         "youtube.com/ptracking",
-        "youtube.com/api/stats/ads"
+        "youtube.com/api/stats/ads",
+        "youtube.com/api/stats/qoe",
+        "youtube.com/api/stats/vss",
+        "s.youtube.com",
+        "video-stats.l.google.com",
+        "ads.youtube.com",
+        "partnerad.l.google.com",
+        "pagead2.googlesyndication.com",
+        "telemetry.youtube.com",
+        "stats.g.doubleclick.net"
     )
 
     fun isAdRequest(url: String): Boolean {

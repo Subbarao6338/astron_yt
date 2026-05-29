@@ -8,9 +8,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="ASTRON"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="Youtube Go"
         android:supportsRtl="true"
         android:theme="@style/Theme.Astron">
 
@@ -25,8 +23,9 @@
 
         <activity
             android:name=".ui.player.PlayerActivity"
-            android:configChanges="orientation|screenSize|layoutDirection"
+            android:configChanges="orientation|screenSize|layoutDirection|smallestScreenSize|screenLayout"
             android:exported="false"
+            android:supportsPictureInPicture="true"
             android:screenOrientation="landscape" />
 
         <activity android:name=".ui.LoginActivity" />
