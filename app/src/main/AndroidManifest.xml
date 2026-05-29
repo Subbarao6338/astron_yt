@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -27,6 +28,14 @@
             android:configChanges="orientation|screenSize|layoutDirection"
             android:exported="false"
             android:screenOrientation="landscape" />
+
+        <activity android:name=".ui.LoginActivity" />
+
+        <service
+            android:name=".ui.player.PlaybackService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
 
     </application>
 

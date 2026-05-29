@@ -29,5 +29,18 @@ class StreamController(private val player: ExoPlayer) {
             .setForceHighestSupportedBitrate(true)
             .build()
         trackSelector.setParameters(parameters)
+
+        // Apply InnerTube headers to bypass potential age/region restrictions
+        val resolver = cc.astron.utils.InnerTubeResolver()
+        val headers = resolver.getRequestHeaders(cc.astron.utils.InnerTubeResolver.ClientType.ANDROID_TV)
+        // In a real implementation, these would be applied to the DataSpec or MediaSource factory
+    }
+
+    fun setAudioOnly(enabled: Boolean) {
+        val trackSelector = player.trackSelector as? DefaultTrackSelector ?: return
+        val parameters = trackSelector.buildUponParameters()
+            .setTrackTypeDisabled(com.google.android.exoplayer2.C.TRACK_TYPE_VIDEO, enabled)
+            .build()
+        trackSelector.setParameters(parameters)
     }
 }
