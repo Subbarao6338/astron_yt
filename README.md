@@ -4,50 +4,43 @@ YouTube videos without ads, downloads 4K quality videos, and supports background
 
 ◈ Key Features ◈
 
-• When playing, you can watch the video immediately without advertising.
+• **Ad-free Experience**: Watch videos immediately without any advertising.
 
-• You can download the video and play the video even in an offline environment. Our advanced features support 4K and MP3 file formats.
+• **High-Quality Downloads**: Download videos in up to 4K quality and MP3 formats for offline viewing.
 
-• You can play video in background playback even when running other apps or with the screen turned off.
+• **Background Playback**: Keep the video playing while using other apps or with the screen turned off.
 
-• We provide advanced technologies and features to be provided in the future, fast and free to all users.
+• **Notification Section**: Stay updated with a dedicated notification section, just like the official Android YouTube app. [Implemented]
 
-• We collect various opinions from all users and reflect them when applying the next technology. We will do our best to support a better user experience with lots of feedback.
+• **Playlist Management**: Easily add any video to your playlists with options available for every video. [Implemented]
 
-• We collect user feedback through official support channels and forums, and we are committed to providing 100% feedback around the clock.
+• **Proper Subtitles**: Enhanced support for subtitles to ensure a better viewing experience. [Implemented]
+
+• **Bypass Quality Restrictions**: Access the highest available quality for all videos without restrictions. [Implemented]
+
+• **Audio Language Selection**: Choose your preferred audio language for supported videos. [Implemented]
+
+• **User-Friendly Interface**: We collect and reflect user feedback to continuously improve the user experience.
 
 ◈ Details ◈
 
-• Very Active Community
+• **Very Active Community**
+We have a global community with channels for the latest information and forums for chatting with other users. Join us for the latest app updates and quick feedback.
+[Go to Community](https://t.me/astronforum)
 
-We have a very interesting community around the world. We have a channel that provides the latest information and a forum where you can chat with users. The latest app version introduction and quick feedback will be helpful to you. Now let's talk with people through the link below.
+• **User Language Support**
+We support over 28 languages and welcome user contributions to add or improve translations. You can directly edit resources used by the app.
+[Support Your Language](https://astron.cc/web/)
 
-• User Language Support
-
-We work with users to create languages to support multiple languages. By default, it supports 28 languages, but if you want to modify or add to an existing language, please support your language through the link below. You can directly edit and change the resources used by the app.* App available for Android.This app only works with Android 7.0 or higher.
-
-App available for Android.
-
-• This app only works with Android 5.0 or higher.
+• **Device Compatibility**
+App available for Android. This app works with Android 7.0 or higher.
 
 ◈ Contact Us ◈
 
-We always value user feedback. Send us your questions or affiliate inquiries by email and we will always check them immediately. We respond 24 hours a day and do our best to improve the user experience with quick feedback.
-
-• email : admin@astron.cc
-• support : https://astron.cc
+We value your feedback. For questions or affiliate inquiries, email us at:
+• **Email**: [admin@astron.cc](mailto:admin@astron.cc)
+• **Support**: [https://astron.cc](https://astron.cc)
 
 <!--
 **astroncc/astroncc** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
 -->
