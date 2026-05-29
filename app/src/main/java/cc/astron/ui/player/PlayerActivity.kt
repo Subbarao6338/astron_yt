@@ -13,7 +13,11 @@ import cc.astron.R
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import cc.astron.utils.AdBlocker
+import cc.astron.utils.InnerTubeResolver
+import cc.astron.utils.AstronDataSourceFactory
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -36,17 +40,31 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var streamController: StreamController
     private lateinit var subtitleController: SubtitleController
     private val sponsorBlockInterceptor = cc.astron.utils.SponsorBlockInterceptor()
+    private var currentVideoId: String = "dQw4w9WgXcQ"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
+
+        currentVideoId = getIntent().getStringExtra("video_id") ?: "dQw4w9WgXcQ"
 
         val intent = Intent(this, PlaybackService::class.java)
         startService(intent)
         bindService(intent, connection, Context.BIND_AUTO_CREATE)
 
         val playerView: StyledPlayerView = findViewById(R.id.player_view)
-        player = ExoPlayer.Builder(this).build()
+
+        val dataSourceFactory = AstronDataSourceFactory(
+            this,
+            "ASTRON/1.0",
+            AdBlocker(),
+            InnerTubeResolver()
+        )
+        val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
+
+        player = ExoPlayer.Builder(this)
+            .setMediaSourceFactory(mediaSourceFactory)
+            .build()
         playerView.player = player
 
         streamController = StreamController(player!!)
@@ -66,7 +84,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun setupSponsorBlock() {
-        sponsorBlockInterceptor.fetchSegments("demo_video_id")
+        sponsorBlockInterceptor.fetchSegments(currentVideoId)
 
         player?.addListener(object : Player.Listener {
             override fun onPositionDiscontinuity(
@@ -96,7 +114,7 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun checkSponsorSegments() {
         val currentPos = player?.currentPosition ?: return
-        val segments = sponsorBlockInterceptor.getSegmentsForVideo("demo_video_id")
+        val segments = sponsorBlockInterceptor.getSegmentsForVideo(currentVideoId)
         for (segment in segments) {
             if (currentPos in segment.start until segment.end) {
                 player?.seekTo(segment.end)
@@ -168,9 +186,11 @@ class PlayerActivity : AppCompatActivity() {
             unbindService(connection)
             isBound = false
         }
-        // Player should probably be managed by service if we want true background play
-        // For now, keeping simple release
-        player?.release()
-        player = null
+        // If background play is enabled, we don't release the player here
+        val preferenceManager = cc.astron.utils.PreferenceManager(this)
+        if (!preferenceManager.isProEnabled()) {
+            player?.release()
+            player = null
+        }
     }
 }
