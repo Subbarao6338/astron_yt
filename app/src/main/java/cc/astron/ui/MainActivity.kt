@@ -21,12 +21,20 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(HomeFragment())
                     true
                 }
+                R.id.navigation_music -> {
+                    loadFragment(MusicFragment())
+                    true
+                }
                 R.id.navigation_notifications -> {
                     loadFragment(NotificationFragment())
                     true
                 }
                 R.id.navigation_library -> {
                     loadFragment(LibraryFragment())
+                    true
+                }
+                R.id.navigation_account -> {
+                    loadFragment(AccountFragment())
                     true
                 }
                 else -> false
