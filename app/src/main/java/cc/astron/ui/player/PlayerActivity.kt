@@ -1,19 +1,28 @@
 package cc.astron.ui.player
 
+import android.app.PictureInPictureParams
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Rational
+import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import cc.astron.R
+import cc.astron.utils.AdBlockInterceptor
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSource
+import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import okhttp3.OkHttpClient
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -46,7 +55,18 @@ class PlayerActivity : AppCompatActivity() {
         bindService(intent, connection, Context.BIND_AUTO_CREATE)
 
         val playerView: StyledPlayerView = findViewById(R.id.player_view)
-        player = ExoPlayer.Builder(this).build()
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(AdBlockInterceptor())
+            .build()
+
+        val dataSourceFactory = OkHttpDataSource.Factory(okHttpClient)
+        val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
+
+        player = ExoPlayer.Builder(this)
+            .setMediaSourceFactory(mediaSourceFactory)
+            .build()
+
         playerView.player = player
 
         streamController = StreamController(player!!)
@@ -63,6 +83,26 @@ class PlayerActivity : AppCompatActivity() {
 
         streamController.bypassQualityRestrictions()
         setupSponsorBlock()
+    }
+
+    override fun onUserLeaveHint() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val params = PictureInPictureParams.Builder()
+                .setAspectRatio(Rational(16, 9))
+                .build()
+            enterPictureInPictureMode(params)
+        }
+    }
+
+    override fun onPictureInPictureModeChanged(
+        isInPictureInPictureMode: Boolean,
+        newConfig: Configuration
+    ) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        val controls = listOf(R.id.btn_playlist, R.id.btn_subtitles, R.id.btn_settings)
+        controls.forEach { id ->
+            findViewById<View>(id).visibility = if (isInPictureInPictureMode) View.GONE else View.VISIBLE
+        }
     }
 
     private fun setupSponsorBlock() {

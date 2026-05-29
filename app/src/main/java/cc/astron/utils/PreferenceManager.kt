@@ -2,8 +2,12 @@ package cc.astron.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import cc.astron.model.Account
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class PreferenceManager(context: Context) {
+    private val gson = Gson()
     private val prefs: SharedPreferences = context.getSharedPreferences("astron_prefs", Context.MODE_PRIVATE)
 
     fun setProEnabled(enabled: Boolean) {
@@ -11,7 +15,7 @@ class PreferenceManager(context: Context) {
     }
 
     fun isProEnabled(): Boolean {
-        return prefs.getBoolean("pro_enabled", false)
+        return true // All features unlocked in ASTRON
     }
 
     fun setUserLoggedIn(loggedIn: Boolean) {
@@ -22,14 +26,18 @@ class PreferenceManager(context: Context) {
         return prefs.getBoolean("user_logged_in", false)
     }
 
-    fun getAccounts(): List<String> {
-        return prefs.getStringSet("accounts", emptySet())?.toList() ?: emptyList()
+    fun getAccounts(): List<Account> {
+        val json = prefs.getString("accounts_json", "[]")
+        val type = object : TypeToken<List<Account>>() {}.type
+        return gson.fromJson(json, type)
     }
 
-    fun addAccount(accountId: String) {
-        val accounts = getAccounts().toMutableSet()
-        accounts.add(accountId)
-        prefs.edit().putStringSet("accounts", accounts).apply()
+    fun addAccount(account: Account) {
+        val accounts = getAccounts().toMutableList()
+        accounts.removeAll { it.id == account.id }
+        accounts.add(account)
+        val json = gson.toJson(accounts)
+        prefs.edit().putString("accounts_json", json).apply()
     }
 
     fun getActiveAccountId(): String? {

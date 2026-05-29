@@ -24,6 +24,8 @@ class AccountFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_account, container, false)
         preferenceManager = PreferenceManager(requireContext())
+        accounts.clear()
+        accounts.addAll(preferenceManager.getAccounts())
 
         val userStatus: TextView = view.findViewById(R.id.user_status)
         val btnLogin: Button = view.findViewById(R.id.btn_login)
